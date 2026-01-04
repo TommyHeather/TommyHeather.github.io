@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- TODO: впиши своё имя / ник в title -->
+    <title>Tushkanchik | Portfolio</title>
+
+    <!-- TODO: замени путь на свою иконку сайта -->
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="script.js"></script>
+</head>
+<body>
+<!-- Кастомный курсор -->
+<div class="cursor-dot"></div>
+<div class="cursor-outline"></div>
+
+<!-- Фоновой шум и градиенты -->
+<div class="noise-layer"></div>
+<div class="gradient-orbit orbit-1"></div>
+<div class="gradient-orbit orbit-2"></div>
+
+<!-- Фон с "пишущимся" кодом -->
+<div class="code-bg">
+    <pre>
+# setup
+server.enable("minecraft-network")
+server.region("eu-central")
+plugins.install([
+  "antiCheat",
+  "trapItems",
+  "profileBot",
+  "tpPanel"
+])
+
+# automation
+cron.add("backup-world", "0 4 * * *")
+cron.add("restart-lowTPS", "*/5 * * * *")
+
+# linux
+sudo apt update && sudo apt upgrade -y
+journalctl -fu mc-server
+    </pre>
+</div>
+
+<header class="topbar">
+    <div class="brand">
+        <span class="brand-mark">TU</span>
+        <span class="brand-text" data-i18n="brand_name">Tushkanchik</span>
+    </div>
+    <nav class="nav">
+        <a href="#games" class="nav-link" data-i18n="nav_games">Игры</a>
+        <a href="#social" class="nav-link" data-i18n="nav_social">Соц-сети</a>
+        <a href="#infra" class="nav-link" data-i18n="nav_infra">Сервера и железо</a>
+        <a href="#contact" class="nav-link" data-i18n="nav_contact">Связаться</a>
+    </nav>
+
+    <!-- Переключатель языков -->
+    <div class="lang-switcher" aria-label="Language switcher">
+        <button class="lang-btn active" data-lang="ru">RU</button>
+        <button class="lang-btn" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="he">HE</button>
+    </div>
+</header>
+
+<main class="page">
+
+    <!-- О СЕБЕ -->
+    <section id="about" class="section section-hero">
+        <div class="hero-text">
+            <h1 data-i18n="hero_title">Привет, я Tushkanchik</h1>
+            <p class="hero-subtitle" data-i18n="hero_subtitle">
+                Делаю сервера, ботов и автоматизации, которые не падают ночью и экономят кучу времени.
+            </p>
+            <div class="hero-meta">
+                <span data-i18n="hero_chip1">Minecraft-инфраструктура</span>
+                <span data-i18n="hero_chip2">Telegram / Discord боты</span>
+                <span data-i18n="hero_chip3">Автоматизация процессов</span>
+            </div>
+        </div>
+
+        <div class="hero-card">
+            <!-- TODO: можешь заменить на свою аватарку (картинку фоном) -->
+            <div class="hero-avatar">
+                <span>TU</span>
+            </div>
+            <p class="hero-bio" data-i18n="hero_bio">
+                Работаю с Linux-серверами, Minecraft-сетями, ботами и железом. Люблю, когда всё
+                собрано аккуратно, прозрачно и без магии: понятные конфиги, мониторинг и резервные копии.
+            </p>
+            <div class="hero-tags">
+                <span>#Linux</span>
+                <span>#Minecraft</span>
+                <span>#Automation</span>
+                <span>#Hardware</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ИГРЫ (только Minecraft) -->
+    <section id="games" class="section">
+        <header class="section-header">
+            <h2 data-i18n="games_title">Игры</h2>
+            <p data-i18n="games_subtitle">Minecraft-экосистема от сервера до ботов.</p>
+        </header>
+
+        <div class="single-game-card info-card active">
+            <h3 data-i18n="mc_title">Minecraft</h3>
+            <p data-i18n="mc_intro">
+                Полный цикл работы с Minecraft-проектами: от чистого сервера до продвинутых сборок и интеграций.
+            </p>
+            <ul data-i18n-list="mc_list">
+                <!-- Список заполняется из script.js по выбранному языку -->
+            </ul>
+        </div>
+    </section>
+
+    <!-- СОЦ-СЕТИ -->
+    <section id="social" class="section">
+        <header class="section-header">
+            <h2 data-i18n="social_title">Соц-сети</h2>
+            <p data-i18n="social_subtitle">Боты, автоматизация и удобные сценарии общения.</p>
+        </header>
+
+        <div class="grid-cards">
+            <!-- Telegram -->
+            <article class="glass-card">
+                <header>
+                    <span class="card-icon">📨</span>
+                    <h3 data-i18n="tg_title">Telegram</h3>
+                </header>
+                <p data-i18n="tg_text">
+                    Боты на любой вкус и цвет: автоматизация, модерация, игры, системы регистрации и многое другое.
+                </p>
+                <ul data-i18n-list="tg_list"></ul>
+                <!-- TODO: вставь реальную ссылку на свой Telegram -->
+                <a href="#" class="card-link" data-i18n="tg_link">Написать в Telegram</a>
+            </article>
+
+            <!-- Discord -->
+            <article class="glass-card">
+                <header>
+                    <span class="card-icon">🎧</span>
+                    <h3 data-i18n="ds_title">Discord</h3>
+                </header>
+                <p data-i18n="ds_text">
+                    Игровые боты и инструменты, которые упрощают жизнь админам: автомодерация, модерация, сервисные роли.
+                </p>
+                <ul data-i18n-list="ds_list"></ul>
+                <!-- TODO: ссылка-приглашение Discord -->
+                <a href="#" class="card-link" data-i18n="ds_link">Discord-сервер</a>
+            </article>
+
+            <!-- WhatsApp + Instagram -->
+            <article class="glass-card">
+                <header>
+                    <span class="card-icon">💬</span>
+                    <h3 data-i18n="waig_title">WhatsApp &amp; Instagram</h3>
+                </header>
+                <p data-i18n="waig_text">
+                    Автоматизация действий, страничные и бизнес-боты, интегрированные веб-сайты и приложения.
+                </p>
+                <ul data-i18n-list="waig_list"></ul>
+                <!-- TODO: ссылки на WhatsApp и Instagram -->
+                <a href="#" class="card-link" data-i18n="waig_link">Связаться через WhatsApp / Instagram</a>
+            </article>
+
+            <!-- VK -->
+            <article class="glass-card">
+                <header>
+                    <span class="card-icon">📘</span>
+                    <h3 data-i18n="vk_title">ВКонтакте</h3>
+                </header>
+                <p data-i18n="vk_text">
+                    Страничные и публичные боты, автоматизация действий, мини-игры, модерация и интеграции с другими системами.
+                </p>
+                <ul data-i18n-list="vk_list"></ul>
+                <!-- TODO: ссылка на VK -->
+                <a href="#" class="card-link" data-i18n="vk_link">Страница ВК</a>
+            </article>
+        </div>
+    </section>
+
+    <!-- Сервера и железо -->
+    <section id="infra" class="section">
+        <header class="section-header">
+            <h2 data-i18n="infra_title">Сервера и железо</h2>
+            <p data-i18n="infra_subtitle">
+                Linux-сервера, автоматизация и работа с физическими ПК.
+            </p>
+        </header>
+
+        <div class="timeline">
+            <!-- Linux-сервера -->
+            <article class="timeline-item">
+                <h3 data-i18n="linux_title">Linux-сервера</h3>
+                <p data-i18n="linux_text">
+                    Продуманная конфигурация игровых и сервисных серверов на Ubuntu / Debian.
+                </p>
+                <ul data-i18n-list="linux_list"></ul>
+            </article>
+
+            <!-- Автоматизация -->
+            <article class="timeline-item">
+                <h3 data-i18n="auto_title">Автоматизация</h3>
+                <p data-i18n="auto_text">
+                    Скрипты и сервисы, которые снимают рутину как на Windows, так и на Linux.
+                </p>
+                <ul data-i18n-list="auto_list"></ul>
+            </article>
+
+            <!-- Железо -->
+            <article class="timeline-item">
+                <h3 data-i18n="hw_title">Физическое железо</h3>
+                <p data-i18n="hw_text">
+                    Работа с реальными ПК, сборками и обслуживанием.
+                </p>
+                <ul data-i18n-list="hw_list"></ul>
+            </article>
+        </div>
+    </section>
+
+    <!-- Контакты -->
+    <section id="contact" class="section">
+        <header class="section-header">
+            <h2 data-i18n="contact_title">Связаться</h2>
+            <p data-i18n="contact_subtitle">
+                Опишите задачу — придумаем удобное решение.
+            </p>
+        </header>
+
+        <div class="contact-layout">
+            <form class="contact-form">
+                <!-- TODO: замените action на ваш обработчик формы или сервис (Formspree и т.п.) -->
+                <div class="contact-row">
+                    <label>
+                        <span data-i18n="contact_name_label">Имя</span>
+                        <input type="text" name="name" required placeholder="Tushkanchik">
+                    </label>
+                    <label>
+                        <span data-i18n="contact_email_label">Email</span>
+                        <!-- TODO: можно заменить placeholder на свой основной e-mail -->
+                        <input type="email" name="email" required placeholder="you@example.com">
+                    </label>
+                </div>
+                <label>
+                    <span data-i18n="contact_msg_label">Сообщение</span>
+                    <textarea name="message" rows="4" required
+                              placeholder="Кратко опишите задачу, сервер, бота или проект."></textarea>
+                </label>
+                <button type="submit" class="btn-primary" data-i18n="contact_btn">
+                    Отправить
+                </button>
+            </form>
+
+            <div class="contact-side">
+                <h3 data-i18n="contact_socials_title">Быстрые контакты</h3>
+                <p data-i18n="contact_socials_text">
+                    Проще всего написать в Telegram или Discord — отвечаю там чаще всего.
+                </p>
+                <ul class="contact-links">
+                    <!-- TODO: замените # на реальные ссылки -->
+                    <li><a href="#" data-i18n="contact_tg">Telegram</a></li>
+                    <li><a href="#" data-i18n="contact_ds">Discord</a></li>
+                    <li><a href="#" data-i18n="contact_vk">VK</a></li>
+                    <li><a href="#" data-i18n="contact_wa">WhatsApp</a></li>
+                    <li><a href="#" data-i18n="contact_ig">Instagram</a></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer class="footer">
+    <span data-i18n="footer_text">© 2025 Tushkanchik. Можно делиться, но лучше спросить.</span>
+</footer>
+
+<!-- Плавающая кнопка "Связаться" -->
+<button class="floating-contact" data-scroll="#contact" data-i18n="float_contact">
+    Связаться
+</button>
+
+</body>
+</html>
