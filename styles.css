@@ -36,7 +36,7 @@ body {
     background: radial-gradient(circle at top, #111827 0, #020617 60%, #000 100%);
     color: var(--text-main);
     overflow-x: hidden;
-    cursor: none;
+    cursor: auto;
 }
 
 /* RTL для иврита */
@@ -724,3 +724,10 @@ a, button, input, textarea { cursor: none; }
 @media (prefers-reduced-motion: reduce) {
     .code-bg pre { animation: none; }
 }
+/* Прячем системный курсор только когда JS реально запустился */
+body.cursor-on { cursor: none; }
+body.cursor-on a,
+body.cursor-on button,
+body.cursor-on input,
+body.cursor-on textarea { cursor: none; }
+
