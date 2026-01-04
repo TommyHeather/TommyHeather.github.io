@@ -4,19 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- TODO: впиши своё имя / ник в title -->
     <title>Tushkanchik | Portfolio</title>
-
-    <!-- TODO: замени путь на свою иконку сайта -->
     <link rel="icon" type="image/png" href="assets/favicon.png">
 
     <link rel="stylesheet" href="styles.css">
     <script defer src="script.js"></script>
 </head>
 <body>
-<!-- Кастомный курсор -->
-<div class="cursor-dot"></div>
-<div class="cursor-outline"></div>
+
+<!-- Matrix trail canvas -->
+<canvas id="matrixTrail" aria-hidden="true"></canvas>
+
+<!-- Programming cursor -->
+<div class="code-cursor" aria-hidden="true">
+    <span class="code-cursor-icon">&gt;_</span>
+</div>
 
 <!-- Фоновой шум и градиенты -->
 <div class="noise-layer"></div>
@@ -83,7 +85,6 @@ journalctl -fu mc-server
         </div>
 
         <div class="hero-card">
-            <!-- TODO: можешь заменить на свою аватарку (картинку фоном) -->
             <div class="hero-avatar">
                 <span>TU</span>
             </div>
@@ -112,9 +113,7 @@ journalctl -fu mc-server
             <p data-i18n="mc_intro">
                 Полный цикл работы с Minecraft-проектами: от чистого сервера до продвинутых сборок и интеграций.
             </p>
-            <ul data-i18n-list="mc_list">
-                <!-- Список заполняется из script.js по выбранному языку -->
-            </ul>
+            <ul data-i18n-list="mc_list"></ul>
         </div>
     </section>
 
@@ -136,7 +135,6 @@ journalctl -fu mc-server
                     Боты на любой вкус и цвет: автоматизация, модерация, игры, системы регистрации и многое другое.
                 </p>
                 <ul data-i18n-list="tg_list"></ul>
-                <!-- TODO: вставь реальную ссылку на свой Telegram -->
                 <a href="#" class="card-link" data-i18n="tg_link">Написать в Telegram</a>
             </article>
 
@@ -150,7 +148,6 @@ journalctl -fu mc-server
                     Игровые боты и инструменты, которые упрощают жизнь админам: автомодерация, модерация, сервисные роли.
                 </p>
                 <ul data-i18n-list="ds_list"></ul>
-                <!-- TODO: ссылка-приглашение Discord -->
                 <a href="#" class="card-link" data-i18n="ds_link">Discord-сервер</a>
             </article>
 
@@ -164,7 +161,6 @@ journalctl -fu mc-server
                     Автоматизация действий, страничные и бизнес-боты, интегрированные веб-сайты и приложения.
                 </p>
                 <ul data-i18n-list="waig_list"></ul>
-                <!-- TODO: ссылки на WhatsApp и Instagram -->
                 <a href="#" class="card-link" data-i18n="waig_link">Связаться через WhatsApp / Instagram</a>
             </article>
 
@@ -178,7 +174,6 @@ journalctl -fu mc-server
                     Страничные и публичные боты, автоматизация действий, мини-игры, модерация и интеграции с другими системами.
                 </p>
                 <ul data-i18n-list="vk_list"></ul>
-                <!-- TODO: ссылка на VK -->
                 <a href="#" class="card-link" data-i18n="vk_link">Страница ВК</a>
             </article>
         </div>
@@ -194,7 +189,6 @@ journalctl -fu mc-server
         </header>
 
         <div class="timeline">
-            <!-- Linux-сервера -->
             <article class="timeline-item">
                 <h3 data-i18n="linux_title">Linux-сервера</h3>
                 <p data-i18n="linux_text">
@@ -203,7 +197,6 @@ journalctl -fu mc-server
                 <ul data-i18n-list="linux_list"></ul>
             </article>
 
-            <!-- Автоматизация -->
             <article class="timeline-item">
                 <h3 data-i18n="auto_title">Автоматизация</h3>
                 <p data-i18n="auto_text">
@@ -212,7 +205,6 @@ journalctl -fu mc-server
                 <ul data-i18n-list="auto_list"></ul>
             </article>
 
-            <!-- Железо -->
             <article class="timeline-item">
                 <h3 data-i18n="hw_title">Физическое железо</h3>
                 <p data-i18n="hw_text">
@@ -234,7 +226,6 @@ journalctl -fu mc-server
 
         <div class="contact-layout">
             <form class="contact-form">
-                <!-- TODO: замените action на ваш обработчик формы или сервис (Formspree и т.п.) -->
                 <div class="contact-row">
                     <label>
                         <span data-i18n="contact_name_label">Имя</span>
@@ -242,7 +233,6 @@ journalctl -fu mc-server
                     </label>
                     <label>
                         <span data-i18n="contact_email_label">Email</span>
-                        <!-- TODO: можно заменить placeholder на свой основной e-mail -->
                         <input type="email" name="email" required placeholder="you@example.com">
                     </label>
                 </div>
@@ -262,7 +252,6 @@ journalctl -fu mc-server
                     Проще всего написать в Telegram или Discord — отвечаю там чаще всего.
                 </p>
                 <ul class="contact-links">
-                    <!-- TODO: замените # на реальные ссылки -->
                     <li><a href="#" data-i18n="contact_tg">Telegram</a></li>
                     <li><a href="#" data-i18n="contact_ds">Discord</a></li>
                     <li><a href="#" data-i18n="contact_vk">VK</a></li>
@@ -279,7 +268,6 @@ journalctl -fu mc-server
     <span data-i18n="footer_text">© 2025 Tushkanchik. Можно делиться, но лучше спросить.</span>
 </footer>
 
-<!-- Плавающая кнопка "Связаться" -->
 <button class="floating-contact" data-scroll="#contact" data-i18n="float_contact">
     Связаться
 </button>
