@@ -1,27 +1,117 @@
-// ===== Кастомный курсор =====
+// ===== Programming cursor + Matrix trail =====
 
-const dot = document.querySelector('.cursor-dot');
-const outline = document.querySelector('.cursor-outline');
+const cursorEl = document.querySelector('.code-cursor');
+const cursorIcon = document.querySelector('.code-cursor-icon');
+
+// На тач-устройствах курсор и матрица не нужны
+const isTouch = matchMedia('(pointer: coarse)').matches;
 
 let mouseX = window.innerWidth / 2;
 let mouseY = window.innerHeight / 2;
-let outlineX = mouseX;
-let outlineY = mouseY;
 
-window.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-    dot.style.transform = `translate(${mouseX}px, ${mouseY}px)`;
-});
+if (isTouch) {
+    if (cursorEl) cursorEl.style.display = 'none';
+    const c = document.getElementById('matrixTrail');
+    if (c) c.style.display = 'none';
+} else {
+    window.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
 
-function animateOutline() {
-    const speed = 0.16;
-    outlineX += (mouseX - outlineX) * speed;
-    outlineY += (mouseY - outlineY) * speed;
-    outline.style.transform = `translate(${outlineX}px, ${outlineY}px)`;
-    requestAnimationFrame(animateOutline);
+        if (cursorEl) {
+            cursorEl.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
+        }
+    });
+
+    // Реакция на клики (лёгкий "пульс")
+    window.addEventListener('mousedown', () => {
+        if (!cursorIcon) return;
+        cursorIcon.style.transform = 'scale(0.92)';
+    });
+    window.addEventListener('mouseup', () => {
+        if (!cursorIcon) return;
+        cursorIcon.style.transform = 'scale(1)';
+    });
 }
-animateOutline();
+
+// ===== Matrix trail canvas =====
+
+const canvas = document.getElementById('matrixTrail');
+let ctx = null;
+
+if (!isTouch && canvas) {
+    ctx = canvas.getContext('2d', { alpha: true });
+
+    function resizeCanvas() {
+        const dpr = Math.max(1, window.devicePixelRatio || 1);
+        canvas.width = Math.floor(window.innerWidth * dpr);
+        canvas.height = Math.floor(window.innerHeight * dpr);
+        canvas.style.width = `${window.innerWidth}px`;
+        canvas.style.height = `${window.innerHeight}px`;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    const glyphs = "アイウエオカキクケコサシスセソタチツテトナニヌネノ0123456789abcdefghijklmnopqrstuvwxyz<>/[]{};=+-_".split("");
+    const particles = [];
+    const MAX_PARTICLES = 240;
+
+    function spawnParticles(x, y) {
+        // плотность следа
+        const count = 6;
+
+        for (let i = 0; i < count; i++) {
+            if (particles.length > MAX_PARTICLES) particles.shift();
+
+            particles.push({
+                x: x + (Math.random() * 14 - 7),
+                y: y + (Math.random() * 14 - 7),
+                vy: 0.25 + Math.random() * 0.9,
+                life: 1.0,
+                decay: 0.02 + Math.random() * 0.035,
+                char: glyphs[(Math.random() * glyphs.length) | 0],
+                size: 12 + (Math.random() * 7),
+                glow: 0.3 + Math.random() * 0.55
+            });
+        }
+    }
+
+    function tick() {
+        // Слой затухания (делает "шлейф")
+        ctx.fillStyle = "rgba(0,0,0,0.12)";
+        ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
+
+        spawnParticles(mouseX, mouseY);
+
+        for (let i = particles.length - 1; i >= 0; i--) {
+            const p = particles[i];
+            p.y += p.vy;
+            p.life -= p.decay;
+
+            if (p.life <= 0) {
+                particles.splice(i, 1);
+                continue;
+            }
+
+            const alpha = Math.max(0, p.life);
+
+            ctx.font = `${p.size}px ui-monospace, Menlo, Consolas, monospace`;
+            ctx.shadowColor = `rgba(0,255,120,${p.glow * alpha})`;
+            ctx.shadowBlur = 10;
+
+            ctx.fillStyle = `rgba(80,255,140,${0.78 * alpha})`;
+            ctx.fillText(p.char, p.x, p.y);
+        }
+
+        requestAnimationFrame(tick);
+    }
+
+    // Если reduce motion — не запускаем матрицу
+    const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduceMotion) tick();
+    else canvas.style.display = 'none';
+}
 
 // ===== Плавный скролл по навигации и кнопке "Связаться" =====
 
@@ -182,7 +272,6 @@ const translations = {
         }
     },
 
-    // ===== English =====
     en: {
         text: {
             brand_name: "Tushkanchik",
@@ -313,7 +402,6 @@ const translations = {
         }
     },
 
-    // ===== Hebrew =====
     he: {
         text: {
             brand_name: "Tushkanchik",
@@ -452,14 +540,12 @@ function applyLanguage(lang) {
     document.documentElement.lang = (lang === 'he') ? 'he' : lang;
     document.body.classList.toggle('lang-he', lang === 'he');
 
-    // Тексты
     Object.entries(pack.text).forEach(([key, value]) => {
         document.querySelectorAll(`[data-i18n="${key}"]`).forEach(el => {
             el.textContent = value;
         });
     });
 
-    // Списки
     Object.entries(pack.lists).forEach(([key, items]) => {
         const el = document.querySelector(`[data-i18n-list="${key}"]`);
         if (!el) return;
@@ -467,10 +553,8 @@ function applyLanguage(lang) {
     });
 }
 
-// Инициализация RU по умолчанию
 applyLanguage('ru');
 
-// Клики по кнопкам языков
 const langButtons = document.querySelectorAll('.lang-btn');
 langButtons.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -481,12 +565,10 @@ langButtons.forEach(btn => {
 });
 
 // ===== Обработка формы (пока просто алерт) =====
-
 const contactForm = document.querySelector('.contact-form');
 if (contactForm) {
     contactForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        // TODO: здесь можно добавить реальную отправку через fetch / сервис форм.
         alert("Форма пока не отправляет письмо. Настройте backend или сервис форм и замените обработчик в script.js.");
     });
 }
